@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { insertSubmissionSchema, type InsertSubmission } from "@shared/schema";
-import { GitBranch } from "lucide-react";
+import { GitBranch, ClipboardList } from "lucide-react";
 
 const SLOTS = [
   { id: "MON_2PM_5PM", label: "Monday 2:00 PM - 5:00 PM" },
@@ -68,10 +68,18 @@ export default function SubmissionForm() {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <Card className="w-full max-w-lg">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <GitBranch className="h-6 w-6" />
-            Python Challenge Submission
-          </CardTitle>
+          <div className="flex justify-between items-center">
+            <CardTitle className="flex items-center gap-2">
+              <GitBranch className="h-6 w-6" />
+              Python Challenge Submission
+            </CardTitle>
+            <Button variant="outline" asChild size="sm">
+              <Link href="/admin" className="flex items-center gap-2">
+                <ClipboardList className="h-4 w-4" />
+                View Submissions
+              </Link>
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <Form {...form}>

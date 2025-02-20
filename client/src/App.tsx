@@ -5,12 +5,14 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import SubmissionForm from "@/pages/form";
 import SuccessPage from "@/pages/success";
+import AdminPage from "@/pages/admin";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={SubmissionForm} />
       <Route path="/success" component={SuccessPage} />
+      <Route path="/admin" component={AdminPage} />
       <Route component={NotFound} />
     </Switch>
   );
