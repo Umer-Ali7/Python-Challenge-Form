@@ -16,7 +16,14 @@ export const insertSubmissionSchema = createInsertSchema(submissions)
   .extend({
     githubUrl: z.string().url("Please enter a valid GitHub URL").startsWith("https://github.com/", "Must be a GitHub repository URL"),
     rollNumber: z.string().regex(/^\d+$/, "Roll number should only contain numbers"),
-    slot: z.enum(["MON_2PM_5PM", "TUE_9AM_12PM"], {
+    slot: z.enum([
+      "MON_2PM_5PM",
+      "TUE_9AM_12PM", "TUE_2PM_5PM", "TUE_7PM_10PM",
+      "THU_9AM_12PM", "THU_2PM_5PM", "THU_7PM_10PM",
+      "FRI_9AM_12PM", "FRI_2PM_5PM", "FRI_7PM_10PM",
+      "SAT_9AM_12PM", "SAT_2PM_5PM", "SAT_7PM_10PM",
+      "SUN_9AM_12PM", "SUN_2PM_5PM", "SUN_7PM_10PM"
+    ], {
       errorMap: () => ({ message: "Please select a valid slot" })
     })
   });

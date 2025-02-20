@@ -16,6 +16,20 @@ import { GitBranch } from "lucide-react";
 const SLOTS = [
   { id: "MON_2PM_5PM", label: "Monday 2:00 PM - 5:00 PM" },
   { id: "TUE_9AM_12PM", label: "Tuesday 9:00 AM - 12:00 PM" },
+  { id: "TUE_2PM_5PM", label: "Tuesday 2:00 PM - 5:00 PM" },
+  { id: "TUE_7PM_10PM", label: "Tuesday 7:00 PM - 10:00 PM" },
+  { id: "THU_9AM_12PM", label: "Thursday 9:00 AM - 12:00 PM" },
+  { id: "THU_2PM_5PM", label: "Thursday 2:00 PM - 5:00 PM" },
+  { id: "THU_7PM_10PM", label: "Thursday 7:00 PM - 10:00 PM" },
+  { id: "FRI_9AM_12PM", label: "Friday 9:00 AM - 12:00 PM" },
+  { id: "FRI_2PM_5PM", label: "Friday 2:00 PM - 5:00 PM" },
+  { id: "FRI_7PM_10PM", label: "Friday 7:00 PM - 10:00 PM" },
+  { id: "SAT_9AM_12PM", label: "Saturday 9:00 AM - 12:00 PM" },
+  { id: "SAT_2PM_5PM", label: "Saturday 2:00 PM - 5:00 PM" },
+  { id: "SAT_7PM_10PM", label: "Saturday 7:00 PM - 10:00 PM" },
+  { id: "SUN_9AM_12PM", label: "Sunday 9:00 AM - 12:00 PM" },
+  { id: "SUN_2PM_5PM", label: "Sunday 2:00 PM - 5:00 PM" },
+  { id: "SUN_7PM_10PM", label: "Sunday 7:00 PM - 10:00 PM" },
 ] as const;
 
 export default function SubmissionForm() {
