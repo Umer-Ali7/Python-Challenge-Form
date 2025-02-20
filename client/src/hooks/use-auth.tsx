@@ -21,7 +21,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
-  
+
   const { data: user, error, isLoading } = useQuery<User | null>({
     queryKey: ["/api/user"],
     queryFn: getQueryFn({ on401: "returnNull" }),
@@ -30,7 +30,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginCredentials) => {
       const res = await apiRequest("POST", "/api/login", credentials);
-      return res.json();
+      const data = await res.json();
+      return data;
     },
     onSuccess: (user: User) => {
       queryClient.setQueryData(["/api/user"], user);
@@ -66,8 +67,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user: user ?? null,
         isLoading,
         error: error ?? null,
-        login: loginMutation.mutateAsync,
-        logout: logoutMutation.mutateAsync,
+        login: async (credentials) => {
+          await loginMutation.mutateAsync(credentials);
+        },
+        logout: async () => {
+          await logoutMutation.mutateAsync();
+        },
       }}
     >
       {children}
