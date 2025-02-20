@@ -13,7 +13,10 @@ import { useToast } from "@/hooks/use-toast";
 import { insertSubmissionSchema, type InsertSubmission } from "@shared/schema";
 import { GitBranch } from "lucide-react";
 
-const SLOTS = ["A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2", "E1", "E2", "F1", "F2"] as const;
+const SLOTS = [
+  { id: "MON_2PM_5PM", label: "Monday 2:00 PM - 5:00 PM" },
+  { id: "TUE_9AM_12PM", label: "Tuesday 9:00 AM - 12:00 PM" },
+] as const;
 
 export default function SubmissionForm() {
   const [, navigate] = useLocation();
@@ -24,7 +27,7 @@ export default function SubmissionForm() {
     defaultValues: {
       name: "",
       rollNumber: "",
-      slot: "A1",
+      slot: "MON_2PM_5PM",
       githubUrl: "",
       feedback: "",
     },
@@ -80,7 +83,7 @@ export default function SubmissionForm() {
                   <FormItem>
                     <FormLabel>Roll Number</FormLabel>
                     <FormControl>
-                      <Input placeholder="21CS123" {...field} />
+                      <Input placeholder="123456" type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,8 +104,8 @@ export default function SubmissionForm() {
                       </FormControl>
                       <SelectContent>
                         {SLOTS.map((slot) => (
-                          <SelectItem key={slot} value={slot}>
-                            {slot}
+                          <SelectItem key={slot.id} value={slot.id}>
+                            {slot.label}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -137,6 +140,7 @@ export default function SubmissionForm() {
                         placeholder="Share your thoughts about the challenge..."
                         className="resize-none"
                         {...field}
+                        value={field.value ?? ''}
                       />
                     </FormControl>
                     <FormMessage />

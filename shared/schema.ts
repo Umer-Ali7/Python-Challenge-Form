@@ -15,8 +15,8 @@ export const insertSubmissionSchema = createInsertSchema(submissions)
   .omit({ id: true })
   .extend({
     githubUrl: z.string().url("Please enter a valid GitHub URL").startsWith("https://github.com/", "Must be a GitHub repository URL"),
-    rollNumber: z.string().regex(/^\d{2}[A-Z]{2,3}\d{3}$/, "Invalid roll number format (e.g. 21CS123)"),
-    slot: z.enum(["A1", "A2", "B1", "B2", "C1", "C2", "D1", "D2", "E1", "E2", "F1", "F2"], {
+    rollNumber: z.string().regex(/^\d+$/, "Roll number should only contain numbers"),
+    slot: z.enum(["MON_2PM_5PM", "TUE_9AM_12PM"], {
       errorMap: () => ({ message: "Please select a valid slot" })
     })
   });
