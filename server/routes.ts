@@ -42,10 +42,13 @@ export async function registerRoutes(app: Express) {
 
   // Create initial admin user if it doesn't exist
   const hashedPassword = await hashPassword("UmerAdmin01");
-  await storage.createUser({
-    username: "admin",
-    password: hashedPassword,
-  });
+  const existingAdmin = await storage.getUserByUsername("admin");
+  if (!existingAdmin) {
+    await storage.createUser({
+      username: "admin",
+      password: hashedPassword,
+    });
+  }
 
   return createServer(app);
 }
