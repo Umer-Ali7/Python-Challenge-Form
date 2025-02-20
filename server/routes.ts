@@ -1,11 +1,11 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import { storage } from "./storage";
 import { insertSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
-import { setupAuth } from "./auth";
+import { setupAuth, hashPassword } from "./auth";
 
-function requireAuth(req: Express.Request, res: Express.Response, next: Express.NextFunction) {
+function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.isAuthenticated()) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -41,9 +41,10 @@ export async function registerRoutes(app: Express) {
   });
 
   // Create initial admin user if it doesn't exist
-  const adminPassword = await storage.createUser({
+  const hashedPassword = await hashPassword("UmerAdmin01");
+  await storage.createUser({
     username: "admin",
-    password: "admin123", // In production, use a secure password
+    password: hashedPassword,
   });
 
   return createServer(app);
