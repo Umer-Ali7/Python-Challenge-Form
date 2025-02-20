@@ -3,8 +3,19 @@ import { createServer } from "http";
 import { storage } from "./storage";
 import { insertSubmissionSchema } from "@shared/schema";
 import { z } from "zod";
+import { setupAuth } from "./auth";
+
+function requireAuth(req: Express.Request, res: Express.Response, next: Express.NextFunction) {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  next();
+}
 
 export async function registerRoutes(app: Express) {
+  // Set up authentication
+  setupAuth(app);
+
   app.post("/api/submissions", async (req, res) => {
     try {
       const submission = insertSubmissionSchema.parse(req.body);
@@ -19,13 +30,20 @@ export async function registerRoutes(app: Express) {
     }
   });
 
-  app.get("/api/submissions", async (_req, res) => {
+  // Protected route - only accessible after login
+  app.get("/api/submissions", requireAuth, async (_req, res) => {
     try {
       const submissions = await storage.getSubmissions();
       res.json(submissions);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch submissions" });
     }
+  });
+
+  // Create initial admin user if it doesn't exist
+  const adminPassword = await storage.createUser({
+    username: "admin",
+    password: "admin123", // In production, use a secure password
   });
 
   return createServer(app);

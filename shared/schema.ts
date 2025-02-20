@@ -11,6 +11,12 @@ export const submissions = pgTable("submissions", {
   feedback: text("feedback"),
 });
 
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull(),
+  password: text("password").notNull(),
+});
+
 export const insertSubmissionSchema = createInsertSchema(submissions)
   .omit({ id: true })
   .extend({
@@ -28,5 +34,9 @@ export const insertSubmissionSchema = createInsertSchema(submissions)
     })
   });
 
+export const insertUserSchema = createInsertSchema(users).omit({ id: true });
+
 export type InsertSubmission = z.infer<typeof insertSubmissionSchema>;
 export type Submission = typeof submissions.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = typeof users.$inferSelect;
